@@ -1,0 +1,70 @@
+## Build and publish folders
+bin/
+obj/
+out/
+publish/
+
+## User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Visual Studio and VS Code
+.vs/
+.vscode/
+
+## .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.deps.json
+*.runtimeconfig.json
+*.dll
+*.exe
+*.pdb
+
+## ASP.NET Core
+wwwroot/lib/
+appsettings.Development.json
+secrets.json
+.env
+
+## Docker
+*.container
+*.pid
+Dockerfile.*
+
+## Logs and temp
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+## OS-specific
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+## Rider IDE (if applicable)
+.idea/
+*.sln.iml
+
+## NuGet packages (if using packages folder instead of global cache)
+packages/
+
+## Test results
+TestResults/
+*.coverage
+*.coveragexml
+
+## Other
+_ReSharper*/
+*.ncrunch*
+*.orig
+*.sdf
+*.cache
+*.dbmdl
