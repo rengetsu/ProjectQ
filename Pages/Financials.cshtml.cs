@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using ProjectQ.Models;
+using ProjectQ.Data;
 using System;
 
-namespace ProjectQ.Pages.Financials
+namespace ProjectQ.Pages
 {
     public class FinancialsModel : PageModel
     {

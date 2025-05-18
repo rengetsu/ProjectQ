@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjectQ.Models
 {
-    public class FinancialReocrd
+    [Table("FinancialRecords", Schema = "Yahoo")]
+    public class FinancialRecord
     {
         public int Id { get; set; }
 
