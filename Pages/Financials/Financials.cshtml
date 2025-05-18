@@ -1,0 +1,33 @@
+﻿@page
+@model ProjectQ.Pages.Financials.FinancialsModel
+@{
+}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ticker</th>
+            <th>Company</th>
+            <th>Period</th>
+            <th>Revenue</th>
+            <th>EPS</th>
+            <th>EBIT</th>
+            <th>EBITDA</th>
+            <th>Gross Profit</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model.Records)
+        {
+            <tr>
+                <td>@record.Ticker</td>
+                <td>@record.CompanyName</td>
+                <td>@record.TimePeriod</td>
+                <td>@record.Revenue.ToString("C")</td>
+                <td>@record.EPS.ToString("F2")</td>
+                <td>@record.EBIT.ToString("C")</td>
+                <td>@record.EBITDA.ToString("C")</td>
+                <td>@record.GrossProfit.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
