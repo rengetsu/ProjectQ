@@ -4,6 +4,9 @@ obj/
 out/
 publish/
 
+# Development config - DO NOT COMMIT
+appsettings.Development.json
+
 ## User-specific files
 *.rsuser
 *.suo
