@@ -1,0 +1,41 @@
+﻿@page
+@model ProjectQ.Pages.AddModel
+
+<h2>Add Financial Record</h2>
+
+<form method="post">
+    <div>
+        <label>Ticker:</label>
+        <input asp-for="Record.Ticker" />
+    </div>
+    <div>
+        <label>Company Name:</label>
+        <input asp-for="Record.CompanyName" />
+    </div>
+    <div>
+        <label>Time Period (e.g. 1Q23):</label>
+        <input asp-for="Record.TimePeriod" />
+    </div>
+    <div>
+        <label>Revenue:</label>
+        <input asp-for="Record.Revenue" />
+    </div>
+    <div>
+        <label>EPS:</label>
+        <input asp-for="Record.EPS" />
+    </div>
+    <div>
+        <label>EBIT:</label>
+        <input asp-for="Record.EBIT" />
+    </div>
+    <div>
+        <label>EBITDA:</label>
+        <input asp-for="Record.EBITDA" />
+    </div>
+    <div>
+        <label>Gross Profit:</label>
+        <input asp-for="Record.GrossProfit" />
+    </div>
+
+    <button type="submit">Save</button>
+</form>

@@ -8,6 +8,9 @@ namespace ProjectQ.Models
     {
         public int Id { get; set; }
 
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
+
         [Required]
         public string Ticker { get; set; }
 

@@ -1,0 +1,43 @@
+﻿@page "{id:int}"
+@model ProjectQ.Pages.EditModel
+
+<h2>Edit Financial Record</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Record.Id" />
+
+    <div>
+        <label>Ticker:</label>
+        <input asp-for="Record.Ticker" />
+    </div>
+    <div>
+        <label>Company Name:</label>
+        <input asp-for="Record.CompanyName" />
+    </div>
+    <div>
+        <label>Time Period:</label>
+        <input asp-for="Record.TimePeriod" />
+    </div>
+    <div>
+        <label>Revenue:</label>
+        <input asp-for="Record.Revenue" />
+    </div>
+    <div>
+        <label>EPS:</label>
+        <input asp-for="Record.EPS" />
+    </div>
+    <div>
+        <label>EBIT:</label>
+        <input asp-for="Record.EBIT" />
+    </div>
+    <div>
+        <label>EBITDA:</label>
+        <input asp-for="Record.EBITDA" />
+    </div>
+    <div>
+        <label>Gross Profit:</label>
+        <input asp-for="Record.GrossProfit" />
+    </div>
+
+    <button type="submit">Save</button>
+</form>
