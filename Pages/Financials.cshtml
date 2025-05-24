@@ -11,6 +11,7 @@
     <thead>
         <tr>
             <th>Ticker</th>
+            <th>Date</th>
             <th>Company</th>
             <th>Period</th>
             <th>Revenue</th>
@@ -26,6 +27,7 @@
         {
             <tr>
                 <td>@record.Ticker</td>
+                <td>@record.Date.ToString("yyyy-MM-dd")</td>
                 <td>@record.CompanyName</td>
                 <td>@record.TimePeriod</td>
                 <td>@record.Revenue.ToString("C")</td>

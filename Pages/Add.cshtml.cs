@@ -28,6 +28,8 @@ namespace ProjectQ.Pages
                 return Page();
             }
 
+            Record.Date = DateTime.Today;
+
             _context.FinancialRecords.Add(Record);
             _context.SaveChanges();
 
