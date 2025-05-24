@@ -1,14 +1,17 @@
 ﻿@page
 @model ProjectQ.Pages.FinancialsModel
 
-<div style="display: flex; align-items: center; gap: 10px;">
-    <img src="~/images/yahoo_finance_logo.png" alt="Yahoo Finance Logo" style="height:40px;" />
+<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+    <img src="@Url.Content("~/images/yahoo_finance_logo.png")" alt="Yahoo Finance Logo" style="height:40px;" />
     <h2 style="margin: 0;">Yahoo Finance Financials</h2>
 </div>
 
 <p>
-    <a asp-page="/Add">Add New Record</a>
+    <a asp-page="/Add" class="btn btn-outline-secondary btn-sm">
+        ➕ Add New Record
+    </a>
 </p>
+
 
 <table class="table table-bordered">
     <thead>
