@@ -1,10 +1,12 @@
 ﻿@page
-@model FinancialsModel
-@{
-}
+@model ProjectQ.Pages.FinancialsModel
+
+<h2>Company Financials</h2>
+
 <p>
     <a asp-page="/Add">Add New Record</a>
 </p>
+
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -16,6 +18,7 @@
             <th>EBIT</th>
             <th>EBITDA</th>
             <th>Gross Profit</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -30,6 +33,12 @@
                 <td>@record.EBIT.ToString("C")</td>
                 <td>@record.EBITDA.ToString("C")</td>
                 <td>@record.GrossProfit.ToString("C")</td>
+                <td>
+                    <a asp-page="/Edit" asp-route-id="@record.Id">Edit</a> |
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@record.Id" style="display:inline;">
+                        <button type="submit" class="btn btn-link p-0" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>

@@ -22,5 +22,24 @@ namespace ProjectQ.Pages
         {
             Records = await _context.FinancialRecords.ToListAsync();
         }
+
+        /// <summary>
+        /// Delete financial record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            var record = await _context.FinancialRecords.FindAsync(id);
+
+            if (record != null)
+            {
+                _context.FinancialRecords.Remove(record);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage();
+        }
+
     }
 }
