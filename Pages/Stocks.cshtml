@@ -1,0 +1,34 @@
+﻿@page
+@model ProjectQ.Pages.StocksModel
+
+<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+    <h2 style="margin: 0;">Stock Prices</h2>
+</div>
+
+<form method="post" class="mb-3">
+    <div class="form-inline">
+        <input asp-for="NewStock.Ticker" placeholder="Ticker" class="form-control form-control-sm mr-2" />
+        <input asp-for="NewStock.LastPrice" placeholder="Last Price" class="form-control form-control-sm mr-2" />
+        <button type="submit" class="btn btn-outline-primary btn-sm">➕ Add Stock</button>
+    </div>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ticker</th>
+            <th>Date</th>
+            <th>Last Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var stock in Model.StockList)
+        {
+            <tr>
+                <td>@stock.Ticker</td>
+                <td>@stock.Date.ToString("yyyy-MM-dd")</td>
+                <td>@stock.LastPrice</td>
+            </tr>
+        }
+    </tbody>
+</table>
