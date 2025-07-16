@@ -10,5 +10,7 @@ namespace ProjectQ.Data
         : base(options) { }
 
         public DbSet<FinancialRecord> FinancialRecords { get; set; }
+
+        public DbSet<Stock> Stocks { get; set; }
     }
 }
