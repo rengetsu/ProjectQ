@@ -9,16 +9,30 @@ namespace ProjectQ.Models
     {
         public int Id { get; set; }
 
+        [Column("TradeDate")]
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
+
+
         [Required]
         public string Ticker { get; set; }
 
-        [Required]
         public int Quantity { get; set; }
 
-        [Required]
-        public decimal AvgBuyPrice { get; set; }
+        public decimal TradedValue { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
+        public DateTime OperationDateTime { get; set; }
+
+        public decimal Fees { get; set; }
+
+        public decimal TotalCost { get; set; }
+
+        public string TradeId { get; set; }
+
+        public string ISIN { get; set; }
+
+        [DataType(DataType.DateTime)]
         public DateTime DateAdded { get; set; }
     }
 }
