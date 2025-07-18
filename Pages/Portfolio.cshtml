@@ -10,6 +10,13 @@
 <form method="post" class="mb-3">
     <div class="row mb-2">
         <div class="col">
+            <select asp-for="NewTrade.OperationType" class="form-control form-control-sm">
+                <option value="">-- Select Type --</option>
+                <option value="BUY">BUY</option>
+                <option value="SELL">SELL</option>
+            </select>
+        </div>
+        <div class="col">
             <input asp-for="NewTrade.Date" type="date" class="form-control form-control-sm" placeholder="Trade Date" />
         </div>
         <div class="col">
@@ -51,6 +58,7 @@
 <table class="table table-bordered table-sm">
     <thead>
         <tr>
+            <th>Type</th>
             <th>Trade Date</th>
             <th>Ticker</th>
             <th>Quantity</th>
@@ -68,6 +76,7 @@
         @foreach (var entry in Model.Holdings)
         {
             <tr>
+                <td>@entry.OperationType</td>
                 <td>@entry.Date.ToString("yyyy-MM-dd")</td>
                 <td>@entry.Ticker</td>
                 <td>@entry.Quantity</td>

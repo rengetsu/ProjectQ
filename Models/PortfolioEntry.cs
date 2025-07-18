@@ -9,6 +9,8 @@ namespace ProjectQ.Models
     {
         public int Id { get; set; }
 
+        public string OperationType { get; set; }
+
         [Column("TradeDate")]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
