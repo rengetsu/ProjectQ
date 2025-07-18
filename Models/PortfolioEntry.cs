@@ -32,6 +32,8 @@ namespace ProjectQ.Models
 
         public string ISIN { get; set; }
 
+        public string Currency { get; set; }
+
         [DataType(DataType.DateTime)]
         public DateTime DateAdded { get; set; }
     }

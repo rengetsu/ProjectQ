@@ -2,6 +2,11 @@
 @model ProjectQ.Pages.PortfolioModel
 @using ProjectQ.Models
 
+<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+    <h2 style="margin: 0;">My Portfolio (Revolut)</h2>
+</div>
+
+<!-- Add Trade Form -->
 <form method="post" class="mb-3">
     <div class="row mb-2">
         <div class="col">
@@ -17,6 +22,7 @@
             <input asp-for="NewTrade.TradedValue" class="form-control form-control-sm" placeholder="Traded Value" />
         </div>
     </div>
+
     <div class="row mb-2">
         <div class="col">
             <input asp-for="NewTrade.OperationDateTime" type="datetime-local" class="form-control form-control-sm" placeholder="Operation Time" />
@@ -33,6 +39,47 @@
         <div class="col">
             <input asp-for="NewTrade.ISIN" class="form-control form-control-sm" placeholder="ISIN" />
         </div>
+        <div class="col">
+            <input asp-for="NewTrade.Currency" class="form-control form-control-sm" placeholder="Currency (e.g. USD)" />
+        </div>
     </div>
+
     <button type="submit" class="btn btn-outline-primary btn-sm">➕ Add Trade</button>
 </form>
+
+<!-- Portfolio Table -->
+<table class="table table-bordered table-sm">
+    <thead>
+        <tr>
+            <th>Trade Date</th>
+            <th>Ticker</th>
+            <th>Quantity</th>
+            <th>Traded Value</th>
+            <th>Fees</th>
+            <th>Total Cost</th>
+            <th>Currency</th>
+            <th>Operation Time</th>
+            <th>Trade ID</th>
+            <th>ISIN</th>
+            <th>Date Added</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entry in Model.Holdings)
+        {
+            <tr>
+                <td>@entry.Date.ToString("yyyy-MM-dd")</td>
+                <td>@entry.Ticker</td>
+                <td>@entry.Quantity</td>
+                <td>@entry.TradedValue.ToString("F2")</td>
+                <td>@entry.Fees.ToString("F2")</td>
+                <td>@entry.TotalCost.ToString("F2")</td>
+                <td>@entry.Currency</td>
+                <td>@entry.OperationDateTime.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@entry.TradeId</td>
+                <td>@entry.ISIN</td>
+                <td>@entry.DateAdded.ToString("yyyy-MM-dd HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>
