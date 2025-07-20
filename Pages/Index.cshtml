@@ -5,6 +5,44 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome!</h1>
+    <p>Quantitative Finance Project</a>.</p>
 </div>
+
+
+<!-- ✅ Database Status Widget with Server Name -->
+<div class="card shadow-sm mb-4" style="max-width: 500px;">
+    <div class="card-body d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-2">
+            <img src="@Url.Content("~/images/azuresql_logo.png")" alt="Azure DB" style="height: 30px;" />
+            <div>
+                <div><strong>Azure SQL Status:</strong></div>
+                <div class="text-muted small">
+                    predictive-flow-ms-sql-server.database.windows.net 
+                    <span id="dbStatus">Checking...</span>
+                </div>
+            </div>
+        </div>
+        <button id="pingDbBtn" class="btn btn-outline-primary btn-sm">🔄 Ping</button>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        async function pingDatabase() {
+            const statusSpan = document.getElementById("dbStatus");
+            statusSpan.textContent = "Checking...";
+            try {
+                const res = await fetch("/Api/PingDatabase");
+                const data = await res.json();
+                statusSpan.textContent = data.status;
+            } catch {
+                statusSpan.textContent = "Error";
+            }
+        }
+
+        document.getElementById("pingDbBtn").addEventListener("click", pingDatabase);
+        pingDatabase(); // Auto-run on page load
+    </script>
+}
