@@ -11,44 +11,52 @@
     <p>Quantitative Finance Project</p>
 </div>
 
-<!-- ✅ Database Status Widget -->
-<div class="card shadow-sm mb-4" style="max-width: 500px;">
-    <div class="card-body d-flex align-items-center justify-content-between">
-        <div class="d-flex align-items-center gap-2">
-            <img src="@Url.Content("~/images/azuresql_logo.png")" alt="Azure DB" style="height: 30px;" />
-            <div>
-                <div><strong>Azure SQL Status:</strong></div>
-                <div class="text-muted small">
-                    predictive-flow-ms-sql-server.database.windows.net
-                    <span id="dbStatus">Checking...</span>
+<!-- 🔄 FLEX CONTAINER FOR WIDGETS -->
+<div class="d-flex flex-wrap gap-4">
+    <!-- LEFT COLUMN -->
+    <div class="d-flex flex-column gap-3" style="flex: 1; min-width: 300px;">
+        <!-- ✅ Database Status Widget -->
+        <div class="card shadow-sm">
+            <div class="card-body d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                    <img src="@Url.Content("~/images/azuresql_logo.png")" alt="Azure DB" style="height: 30px;" />
+                    <div>
+                        <div><strong>Azure SQL Status:</strong></div>
+                        <div class="text-muted small">
+                            predictive-flow-ms-sql-server.database.windows.net
+                            <span id="dbStatus">Checking...</span>
+                        </div>
+                    </div>
                 </div>
+                <button id="pingDbBtn" class="btn btn-outline-primary btn-sm">🔄 Ping</button>
             </div>
         </div>
-        <button id="pingDbBtn" class="btn btn-outline-primary btn-sm">🔄 Ping</button>
+
+        <!-- ✅ Portfolio Allocation Pie Chart -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Portfolio Allocation</h5>
+                @if (Model.HoldingsPieData == null || !Model.HoldingsPieData.Any())
+                {
+                    <div class="text-muted">No holdings data available to display.</div>
+                }
+                else
+                {
+                    <canvas id="portfolioPieChart" width="400" height="400"></canvas>
+                }
+            </div>
+        </div>
     </div>
-</div>
 
-<!-- ✅ Portfolio Allocation Pie Chart Widget -->
-<div class="card shadow-sm mb-4" style="max-width: 500px;">
-    <div class="card-body">
-        <h5 class="card-title">Portfolio Allocation</h5>
-
-        @if (Model.HoldingsPieData == null || !Model.HoldingsPieData.Any())
-        {
-            <div class="text-muted">No holdings data available to display.</div>
-        }
-        else
-        {
-            <canvas id="portfolioPieChart" width="400" height="400"></canvas>
-        }
-    </div>
-</div>
-
-<!-- ✅ Static Line Chart Widget -->
-<div class="card shadow-sm mb-4" style="max-width: 500px;">
-    <div class="card-body">
-        <h5 class="card-title">Sample Stock Price (Static)</h5>
-        <canvas id="lineChart" width="400" height="300"></canvas>
+    <!-- RIGHT COLUMN -->
+    <div style="flex: 1; min-width: 300px;">
+        <!-- ✅ Line Chart: Portfolio Value -->
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">Portfolio Value</h5>
+                <canvas id="lineChart" width="400" height="300"></canvas>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -100,7 +108,7 @@
             data: {
                 labels: ['2025-07-17', '2025-07-18', '2025-07-23'],
                 datasets: [{
-                    label: 'Stock Price',
+                    label: 'Portfolio Value',
                     data: [69.68, 103.72, 187.17],
                     borderColor: 'rgba(75, 192, 192, 1)',
                     fill: false,
