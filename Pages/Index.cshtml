@@ -44,6 +44,15 @@
     </div>
 </div>
 
+<!-- ✅ Static Line Chart Widget -->
+<div class="card shadow-sm mb-4" style="max-width: 500px;">
+    <div class="card-body">
+        <h5 class="card-title">Sample Stock Price (Static)</h5>
+        <canvas id="lineChart" width="400" height="300"></canvas>
+    </div>
+</div>
+
+
 <!-- ✅ Scripts -->
 @section Scripts {
     <script>
@@ -83,4 +92,41 @@
             });
         }
     </script>
+    <script>
+        const lineCtx = document.getElementById('lineChart').getContext('2d');
+
+        new Chart(lineCtx, {
+            type: 'line',
+            data: {
+                labels: ['2025-07-17', '2025-07-18', '2025-07-23'],
+                datasets: [{
+                    label: 'Stock Price',
+                    data: [69.68, 103.72, 187.17],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    fill: false,
+                    tension: 0.3,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Price ($)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
 }
