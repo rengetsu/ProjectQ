@@ -3,10 +3,10 @@
 @using System.Text.Json
 
 <!-- ✅ FLEX CONTAINER -->
-<div class="d-flex flex-wrap gap-4">
+<div class="d-flex flex-row gap-4 flex-nowrap" style="overflow-x: auto;">
 
-    <!-- 📋 LEFT SIDE: STOCK TABLE + FORM -->
-    <div class="flex-fill" style="min-width: 300px;">
+    <!-- 📋 LEFT SIDE: STOCK TABLE + FORM (wider) -->
+    <div class="flex-grow-1" style="flex-basis: 60%; min-width: 350px;">
         <h2>Stock Prices</h2>
 
         <form method="post" class="mb-3">
@@ -38,13 +38,14 @@
         </table>
     </div>
 
-    <!-- 📊 RIGHT SIDE: CHART -->
-    <div class="flex-fill" style="min-width: 300px;">
+    <!-- 📊 RIGHT SIDE: CHART (narrower) -->
+    <div class="flex-grow-1" style="flex-basis: 40%; min-width: 300px;">
         <h4 id="chartTitle">Select a Ticker</h4>
         <canvas id="stockLineChart" width="400" height="300"></canvas>
     </div>
 
 </div>
+
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
