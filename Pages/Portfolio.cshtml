@@ -2,95 +2,164 @@
 @model ProjectQ.Pages.PortfolioModel
 @using ProjectQ.Models
 
-<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-    <img src="@Url.Content("~/images/revolut_logo.png")" alt="Revolut Logo" style="height:40px;" />
-    <h2 style="margin: 0;">My Portfolio</h2>
+<!-- 🟢 Page container -->
+<div style="height: 100vh; overflow: hidden; display: flex; flex-direction: column;">
+
+    <!-- 🔼 Top: Form + Table -->
+    <div style="flex: 8; overflow: auto;">
+        <div style="min-width: 1200px; max-width: 100%; padding: 12px;">
+
+            <!-- 🔹 Header -->
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                <img src="@Url.Content("~/images/revolut_logo.png")" alt="Revolut Logo" style="height:40px;" />
+                <h2 style="margin: 0;">My Portfolio</h2>
+            </div>
+
+            <!-- 🔹 Trade Form -->
+            <form method="post" class="mb-3">
+                <div class="row mb-2">
+                    <div class="col">
+                        <select asp-for="NewTrade.OperationType" class="form-control form-control-sm">
+                            <option value="">-- Select Type --</option>
+                            <option value="BUY">BUY</option>
+                            <option value="SELL">SELL</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <input asp-for="NewTrade.Date" type="date" class="form-control form-control-sm" />
+                    </div>
+                    <div class="col">
+                        <input asp-for="NewTrade.Ticker" class="form-control form-control-sm" placeholder="Ticker" />
+                    </div>
+                    <div class="col">
+                        <input asp-for="NewTrade.Quantity" class="form-control form-control-sm" placeholder="Quantity" />
+                    </div>
+                    <div class="col">
+                        <input asp-for="NewTrade.TradedValue" class="form-control form-control-sm" placeholder="Traded Value" />
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col">
+                        <input asp-for="NewTrade.OperationDateTime" type="datetime-local" class="form-control form-control-sm" placeholder="Operation Time" />
+                    </div>
+                    <div class="col">
+                        <input asp-for="NewTrade.Fees" class="form-control form-control-sm" placeholder="Fees" />
+                    </div>
+                    <div class="col">
+                        <input asp-for="NewTrade.TotalCost" class="form-control form-control-sm" placeholder="Total Cost" />
+                    </div>
+                    <div class="col">
+                        <input asp-for="NewTrade.TradeId" class="form-control form-control-sm" placeholder="Trade ID" />
+                    </div>
+                    <div class="col">
+                        <input asp-for="NewTrade.ISIN" class="form-control form-control-sm" placeholder="ISIN" />
+                    </div>
+                    <div class="col">
+                        <input asp-for="NewTrade.Currency" class="form-control form-control-sm" placeholder="Currency (e.g. USD)" />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-outline-primary btn-sm">➕ Add Trade</button>
+            </form>
+
+            <!-- 🔹 Table -->
+            <div style="overflow: auto;">
+                <table class="table table-bordered table-sm" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Trade Date</th>
+                            <th>Ticker</th>
+                            <th>Quantity</th>
+                            <th>Traded Value</th>
+                            <th>Fees</th>
+                            <th>Total Cost</th>
+                            <th>Currency</th>
+                            <th>Operation Time</th>
+                            <th>Trade ID</th>
+                            <th>ISIN</th>
+                            <th>Date Added</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var entry in Model.Holdings)
+                        {
+                            <tr>
+                                <td>@entry.OperationType</td>
+                                <td>@entry.Date.ToString("yyyy-MM-dd")</td>
+                                <td>@entry.Ticker</td>
+                                <td>@entry.Quantity</td>
+                                <td>@entry.TradedValue.ToString("F2")</td>
+                                <td>@entry.Fees.ToString("F2")</td>
+                                <td>@entry.TotalCost.ToString("F2")</td>
+                                <td>@entry.Currency</td>
+                                <td>@entry.OperationDateTime.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td>@entry.TradeId</td>
+                                <td>@entry.ISIN</td>
+                                <td>@entry.DateAdded.ToString("yyyy-MM-dd HH:mm")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔽 Bottom: Charts Row -->
+    <div style="flex: 2; display: flex; justify-content: space-around; align-items: center; padding: 10px;">
+        <div style="width: 30%;">
+            <h6 class="text-center">Holdings Allocation</h6>
+            <canvas id="holdingsPie"></canvas>
+        </div>
+        <div style="width: 30%;">
+            <h6 class="text-center">Portfolio Growth</h6>
+            <canvas id="growthLine"></canvas>
+        </div>
+    </div>
 </div>
 
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- Add Trade Form -->
-<form method="post" class="mb-3">
-    <div class="row mb-2">
-        <div class="col">
-            <select asp-for="NewTrade.OperationType" class="form-control form-control-sm">
-                <option value="">-- Select Type --</option>
-                <option value="BUY">BUY</option>
-                <option value="SELL">SELL</option>
-            </select>
-        </div>
-        <div class="col">
-            <input asp-for="NewTrade.Date" type="date" class="form-control form-control-sm" placeholder="Trade Date" />
-        </div>
-        <div class="col">
-            <input asp-for="NewTrade.Ticker" class="form-control form-control-sm" placeholder="Ticker" />
-        </div>
-        <div class="col">
-            <input asp-for="NewTrade.Quantity" class="form-control form-control-sm" placeholder="Quantity" />
-        </div>
-        <div class="col">
-            <input asp-for="NewTrade.TradedValue" class="form-control form-control-sm" placeholder="Traded Value" />
-        </div>
-    </div>
+    <script>
+        // 📊 Pie Chart
+        new Chart(document.getElementById('holdingsPie'), {
+            type: 'pie',
+            data: {
+                labels: ['NESR', '555750', 'YUMC', 'MAT', 'MCHA', 'RNL', 'KO'],
+                datasets: [{
+                    label: 'Holdings',
+                    data: [161.01, 31.35, 47.23, 17.40, 31.90, 34.04, 69.68],
+                    backgroundColor: ['#4e79a7', '#f28e2c', '#e15759', '#76b7b2', '#59a14f', '#edc949', '#af7aa1']
+                }]
+            }
+        });
 
-    <div class="row mb-2">
-        <div class="col">
-            <input asp-for="NewTrade.OperationDateTime" type="datetime-local" class="form-control form-control-sm" placeholder="Operation Time" />
-        </div>
-        <div class="col">
-            <input asp-for="NewTrade.Fees" class="form-control form-control-sm" placeholder="Fees" />
-        </div>
-        <div class="col">
-            <input asp-for="NewTrade.TotalCost" class="form-control form-control-sm" placeholder="Total Cost" />
-        </div>
-        <div class="col">
-            <input asp-for="NewTrade.TradeId" class="form-control form-control-sm" placeholder="Trade ID" />
-        </div>
-        <div class="col">
-            <input asp-for="NewTrade.ISIN" class="form-control form-control-sm" placeholder="ISIN" />
-        </div>
-        <div class="col">
-            <input asp-for="NewTrade.Currency" class="form-control form-control-sm" placeholder="Currency (e.g. USD)" />
-        </div>
-    </div>
-
-    <button type="submit" class="btn btn-outline-primary btn-sm">➕ Add Trade</button>
-</form>
-
-<!-- Portfolio Table -->
-<table class="table table-bordered table-sm">
-    <thead>
-        <tr>
-            <th>Type</th>
-            <th>Trade Date</th>
-            <th>Ticker</th>
-            <th>Quantity</th>
-            <th>Traded Value</th>
-            <th>Fees</th>
-            <th>Total Cost</th>
-            <th>Currency</th>
-            <th>Operation Time</th>
-            <th>Trade ID</th>
-            <th>ISIN</th>
-            <th>Date Added</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var entry in Model.Holdings)
-        {
-            <tr>
-                <td>@entry.OperationType</td>
-                <td>@entry.Date.ToString("yyyy-MM-dd")</td>
-                <td>@entry.Ticker</td>
-                <td>@entry.Quantity</td>
-                <td>@entry.TradedValue.ToString("F2")</td>
-                <td>@entry.Fees.ToString("F2")</td>
-                <td>@entry.TotalCost.ToString("F2")</td>
-                <td>@entry.Currency</td>
-                <td>@entry.OperationDateTime.ToString("yyyy-MM-dd HH:mm")</td>
-                <td>@entry.TradeId</td>
-                <td>@entry.ISIN</td>
-                <td>@entry.DateAdded.ToString("yyyy-MM-dd HH:mm")</td>
-            </tr>
-        }
-    </tbody>
-</table>
+        // 📈 Line Chart
+        new Chart(document.getElementById('growthLine'), {
+            type: 'line',
+            data: {
+                labels: ['2025-07-17', '2025-07-18', '2025-07-23', '2025-07-25', '2025-07-28', '2025-07-29'],
+                datasets: [{
+                    label: 'Portfolio € Value',
+                    data: [69.68, 103.72, 187.17, 236.47, 283.70, 392.61],
+                    borderColor: '#4e79a7',
+                    backgroundColor: '#4e79a7',
+                    tension: 0.3,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: value => '€' + value
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}
