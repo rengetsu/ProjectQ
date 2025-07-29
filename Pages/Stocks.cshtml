@@ -1,34 +1,95 @@
 ﻿@page
 @model ProjectQ.Pages.StocksModel
+@using System.Text.Json
 
-<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-    <h2 style="margin: 0;">Stock Prices</h2>
+<!-- ✅ FLEX CONTAINER -->
+<div class="d-flex flex-wrap gap-4">
+
+    <!-- 📋 LEFT SIDE: STOCK TABLE + FORM -->
+    <div class="flex-fill" style="min-width: 300px;">
+        <h2>Stock Prices</h2>
+
+        <form method="post" class="mb-3">
+            <div class="form-inline">
+                <input asp-for="NewStock.Ticker" placeholder="Ticker" class="form-control form-control-sm mr-2" />
+                <input asp-for="NewStock.LastPrice" placeholder="Last Price" class="form-control form-control-sm mr-2" />
+                <button type="submit" class="btn btn-outline-primary btn-sm">➕ Add Stock</button>
+            </div>
+        </form>
+
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Ticker</th>
+                    <th>Date</th>
+                    <th>Last Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var stock in Model.StockList)
+                {
+                    <tr onclick="renderStockChart('@stock.Ticker')" style="cursor: pointer;">
+                        <td>@stock.Ticker</td>
+                        <td>@stock.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@stock.LastPrice</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 📊 RIGHT SIDE: CHART -->
+    <div class="flex-fill" style="min-width: 300px;">
+        <h4 id="chartTitle">Select a Ticker</h4>
+        <canvas id="stockLineChart" width="400" height="300"></canvas>
+    </div>
+
 </div>
 
-<form method="post" class="mb-3">
-    <div class="form-inline">
-        <input asp-for="NewStock.Ticker" placeholder="Ticker" class="form-control form-control-sm mr-2" />
-        <input asp-for="NewStock.LastPrice" placeholder="Last Price" class="form-control form-control-sm mr-2" />
-        <button type="submit" class="btn btn-outline-primary btn-sm">➕ Add Stock</button>
-    </div>
-</form>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const chartDataByTicker = @Html.Raw(JsonSerializer.Serialize(Model.ChartDataByTicker));
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Ticker</th>
-            <th>Date</th>
-            <th>Last Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var stock in Model.StockList)
-        {
-            <tr>
-                <td>@stock.Ticker</td>
-                <td>@stock.Date.ToString("yyyy-MM-dd")</td>
-                <td>@stock.LastPrice</td>
-            </tr>
+        const ctx = document.getElementById('stockLineChart').getContext('2d');
+        let chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Last Price',
+                    data: [],
+                    borderColor: 'blue',
+                    fill: false,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { title: { display: true, text: 'Date' } },
+                    y: { title: { display: true, text: 'Price' } }
+                }
+            }
+        });
+
+        function renderStockChart(ticker) {
+            const entries = chartDataByTicker[ticker];
+            console.log("Entries for", ticker, entries); // ✅ Add this for debugging
+
+            if (!entries || entries.length === 0) {
+                console.warn("No data for ticker:", ticker);
+                return;
+            }
+
+            const labels = entries.map(e => (e.date || e.Date || e[0])?.split('T')[0]);
+            const data = entries.map(e => e.lastPrice || e.LastPrice || e[1]);
+
+            document.getElementById('chartTitle').textContent = `Price History: ${ticker}`;
+            chart.data.labels = labels;
+            chart.data.datasets[0].data = data;
+            chart.update();
         }
-    </tbody>
-</table>
+
+    </script>
+}

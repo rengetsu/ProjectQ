@@ -5,11 +5,23 @@ using ProjectQ.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace ProjectQ.Pages
 {
     public class StocksModel : PageModel
     {
+        public class StockHistoryPoint
+        {
+            public DateTime Date { get; set; }
+            public decimal LastPrice { get; set; }
+        }
+
+        public Dictionary<string, List<StockHistoryPoint>> ChartDataByTicker { get; set; }
+
+
+
+
         private readonly AppDbContext _context;
 
         public StocksModel(AppDbContext context)
@@ -25,7 +37,21 @@ namespace ProjectQ.Pages
         public async Task OnGetAsync()
         {
             StockList = _context.Stocks.OrderByDescending(s => s.Date).ToList();
+
+            ChartDataByTicker = StockList
+                .GroupBy(s => s.Ticker)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.OrderBy(s => s.Date)
+                          .Select(s => new StockHistoryPoint
+                          {
+                              Date = s.Date,
+                              LastPrice = s.LastPrice
+                          })
+                          .ToList()
+                );
         }
+
 
         public IActionResult OnPost()
         {
