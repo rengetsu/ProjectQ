@@ -127,10 +127,20 @@
         new Chart(document.getElementById('holdingsPie'), {
             type: 'pie',
             data: {
-                labels: ['NESR', '555750', 'YUMC', 'MAT', 'MCHA', 'RNL', 'KO'],
+                labels: ['ZAL', 'RNL', 'NESR', '555750', 'YUMC', 'MAT', 'MCHA', 'KO'],
                 datasets: [{
                     label: 'Holdings',
-                    data: [161.01, 31.35, 47.23, 17.40, 31.90, 34.04, 69.68],
+                    data:
+                    [
+                            26.89,         // ZAL
+                            34.08 + 34.04, // RNL total
+                            77.56 + 83.45, // NESR total
+                            31.35,         // 555750
+                            47.23,         // YUMC
+                            17.40,         // MAT
+                            31.90,         // MCHA
+                            69.68          // KO
+                    ],
                     backgroundColor: ['#4e79a7', '#f28e2c', '#e15759', '#76b7b2', '#59a14f', '#edc949', '#af7aa1']
                 }]
             }
@@ -140,10 +150,18 @@
         new Chart(document.getElementById('growthLine'), {
             type: 'line',
             data: {
-                labels: ['2025-07-17', '2025-07-18', '2025-07-23', '2025-07-25', '2025-07-28', '2025-07-29'],
+                labels: ['2025-07-17', '2025-07-18', '2025-07-23', '2025-07-25', '2025-07-28', '2025-07-29', '2025-07-30'],
                 datasets: [{
                     label: 'Portfolio € Value',
-                    data: [69.68, 103.72, 187.17, 236.47, 283.70, 392.61],
+                    data: [
+                        69.68,                              // 2025-07-17
+                        103.72,                             // 2025-07-18
+                        187.17,                             // 2025-07-23
+                        236.47,                             // 2025-07-25
+                        283.70,                             // 2025-07-28
+                        392.61,                             // 2025-07-29
+                        453.58                              // 2025-07-30
+                    ],
                     borderColor: '#4e79a7',
                     backgroundColor: '#4e79a7',
                     tension: 0.3,
