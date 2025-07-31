@@ -5,15 +5,26 @@
 <!-- 🟢 Page container -->
 <div style="height: 100vh; overflow: hidden; display: flex; flex-direction: column;">
 
-    <!-- 🔼 Top: Form + Table -->
+    <!-- 🔹 Header -->
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+        <img src="@Url.Content("~/images/revolut_logo.png")" alt="Revolut Logo" style="height:40px;" />
+        <h2 style="margin: 0;">My Portfolio</h2>
+    </div>
+
+    <!-- 🔼 Top: Charts Row -->
+    <div style="flex: 2; display: flex; justify-content: space-around; align-items: center; padding: 10px;">
+        <div style="width: 30%;">
+            <h6 class="text-center">Holdings Allocation</h6>
+            <canvas id="holdingsPie"></canvas>
+        </div>
+        <div style="width: 30%;">
+            <h6 class="text-center">Portfolio Growth</h6>
+            <canvas id="growthLine"></canvas>
+        </div>
+    </div>
+    <!-- 🔽 Bottom: Form + Table -->
     <div style="flex: 8; overflow: auto;">
         <div style="min-width: 1200px; max-width: 100%; padding: 12px;">
-
-            <!-- 🔹 Header -->
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                <img src="@Url.Content("~/images/revolut_logo.png")" alt="Revolut Logo" style="height:40px;" />
-                <h2 style="margin: 0;">My Portfolio</h2>
-            </div>
 
             <!-- 🔹 Trade Form -->
             <form method="post" class="mb-3">
@@ -106,17 +117,6 @@
         </div>
     </div>
 
-    <!-- 🔽 Bottom: Charts Row -->
-    <div style="flex: 2; display: flex; justify-content: space-around; align-items: center; padding: 10px;">
-        <div style="width: 30%;">
-            <h6 class="text-center">Holdings Allocation</h6>
-            <canvas id="holdingsPie"></canvas>
-        </div>
-        <div style="width: 30%;">
-            <h6 class="text-center">Portfolio Growth</h6>
-            <canvas id="growthLine"></canvas>
-        </div>
-    </div>
 </div>
 
 @section Scripts {
