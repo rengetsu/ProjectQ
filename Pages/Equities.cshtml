@@ -1,0 +1,18 @@
+﻿@page
+@model ProjectQ.Pages.EquitiesModel
+@using ProjectQ.Models
+
+<h2 class="mb-4">Equities</h2>
+
+<div class="d-flex flex-wrap gap-4">
+    @foreach (var equity in Model.EquityList)
+    {
+        <div class="card p-3 shadow-sm" style="width: 300px;">
+            <div class="mb-2" style="height: 80px; overflow: hidden;">
+                @Html.Raw(equity.ImageSvg)
+            </div>
+            <h5>@equity.Ticker - @equity.Name</h5>
+            <p class="text-muted small">@equity.Description</p>
+        </div>
+    }
+</div>
