@@ -7,12 +7,13 @@
 <div class="d-flex flex-wrap gap-4">
     @foreach (var equity in Model.EquityList)
     {
-        <div class="card p-3 shadow-sm" style="width: 300px;">
-            <div class="mb-2" style="height: 80px; overflow: hidden;">
-                @Html.Raw(equity.ImageSvg)
+        <div class="equity-card" style="border: 1px solid #ccc; padding: 12px; border-radius: 8px; margin: 10px; width: 300px;">
+            <div style="margin-bottom: 8px;">
+                <img src="@equity.ImageSvg" alt="@equity.Ticker logo" style="height: 40px;" />
             </div>
-            <h5>@equity.Ticker - @equity.Name</h5>
-            <p class="text-muted small">@equity.Description</p>
+            <strong>@equity.Ticker</strong><br />
+            <span>@equity.Name</span>
+            <p style="font-size: 0.9em; color: #555;">@equity.Description</p>
         </div>
     }
 </div>
