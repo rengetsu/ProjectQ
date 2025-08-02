@@ -15,5 +15,7 @@ namespace ProjectQ.Data
 
         public DbSet<PortfolioEntry> Portfolio { get; set; }
 
+        public DbSet<Equity> Equities { get; set; }
+
     }
 }
