@@ -1,0 +1,46 @@
+﻿@page
+@model ProjectQ.Pages.IdeasModel
+@using ProjectQ.Models
+
+<div class="mb-3">
+    <h2>💡 Trade Ideas</h2>
+</div>
+
+<!-- 🔹 Idea Form -->
+<form method="post" class="mb-4">
+    <div class="row mb-2">
+        <div class="col">
+            <input asp-for="NewIdea.LongTicker" class="form-control form-control-sm" placeholder="Long Ticker(s)" />
+        </div>
+        <div class="col">
+            <input asp-for="NewIdea.ShortTicker" class="form-control form-control-sm" placeholder="Short Ticker(s)" />
+        </div>
+    </div>
+    <div class="mb-2">
+        <textarea asp-for="NewIdea.Description" class="form-control" placeholder="Idea Description..." rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-outline-success btn-sm">➕ Add Idea</button>
+</form>
+
+<!-- 🔹 Ideas Table -->
+<table class="table table-bordered table-sm">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Long</th>
+            <th>Short</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var idea in Model.Ideas)
+        {
+            <tr>
+                <td>@idea.DateAdded.ToString("yyyy-MM-dd")</td>
+                <td>@idea.LongTicker</td>
+                <td>@idea.ShortTicker</td>
+                <td>@idea.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
