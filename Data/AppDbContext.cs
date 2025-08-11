@@ -18,5 +18,11 @@ namespace ProjectQ.Data
         public DbSet<Equity> Equities { get; set; }
         public DbSet<TradeIdea> TradeIdeas { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TradeIdea>().ToTable("TradeIdeas", schema: "Intranet");
+        }
+
+
     }
 }
