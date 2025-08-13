@@ -7,3 +7,5 @@ Backtest a moving average crossover strategy on historical stock price data.
 * Stocks - Page displaying price information and chart for specific stock.
 * Portfolio - Represetns charts and data about portfolio management and operations.
 * Equities - Represents information and description about traded equities in portfolio.
+* Ideas - Page to write down trading ideas.
+* Performance - Page to check strategy perfomance.
