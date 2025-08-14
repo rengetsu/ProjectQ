@@ -120,13 +120,23 @@
 </div>
 
 @section Scripts {
+    @{
+    var growthLabels = Model.GrowthPoints.Select(g => g.Date.ToString("yyyy-MM-dd")).ToList();
+    var growthValues = Model.GrowthPoints.Select(g => g.PortfolioValue).ToList();
+    }
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         const allocations = @Html.Raw(Json.Serialize(Model.Allocations));
 
+        // allocations DynamicsCompressorNode variables
         const labels = allocations.map(x => x.ticker);
         const data = allocations.map(x => x.totalCost);
+
+        // Growth dynamic variables
+        const growthLabels = @Html.Raw(Json.Serialize(growthLabels));
+        const growthValues = @Html.Raw(Json.Serialize(growthValues));
+
         // 📊 Pie Chart
         new Chart(document.getElementById('holdingsPie'), {
             type: 'pie',
@@ -147,18 +157,10 @@
         new Chart(document.getElementById('growthLine'), {
             type: 'line',
             data: {
-                labels: ['2025-07-17', '2025-07-18', '2025-07-23', '2025-07-25', '2025-07-28', '2025-07-29', '2025-07-30'],
+                labels: growthLabels,
                 datasets: [{
                     label: 'Portfolio € Value',
-                    data: [
-                        69.68,                              // 2025-07-17
-                        103.72,                             // 2025-07-18
-                        187.17,                             // 2025-07-23
-                        236.47,                             // 2025-07-25
-                        283.70,                             // 2025-07-28
-                        392.61,                             // 2025-07-29
-                        453.58                              // 2025-07-30
-                    ],
+                    data: growthValues,
                     borderColor: '#4e79a7',
                     backgroundColor: '#4e79a7',
                     tension: 0.3,

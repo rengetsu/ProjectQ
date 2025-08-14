@@ -16,6 +16,7 @@ namespace ProjectQ.Data
         public DbSet<HoldingAllocation> HoldingAllocations { get; set; }
 
         public DbSet<PortfolioEntry> Portfolio { get; set; }
+        public DbSet<PortfolioGrowthPoint> PortfolioGrowthPoints { get; set; }
 
         public DbSet<Equity> Equities { get; set; }
         public DbSet<TradeIdea> TradeIdeas { get; set; }

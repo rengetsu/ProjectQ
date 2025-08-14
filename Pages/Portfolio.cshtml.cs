@@ -23,7 +23,12 @@ namespace ProjectQ.Pages
         [BindProperty]
         public PortfolioEntry NewTrade { get; set; }
 
+        //  Dynamic allocations for the portfolio
         public List<HoldingAllocation> Allocations { get; set; } = new();
+
+        //  Dynamic growth points for the portfolio
+        public List<PortfolioGrowthPoint> GrowthPoints { get; set; } = new();
+
 
         public void OnGet()
         {
@@ -33,6 +38,11 @@ namespace ProjectQ.Pages
 
             Allocations = _context.Set<HoldingAllocation>()
                 .FromSqlRaw("SELECT * FROM Revolut.vw_PortfolioHoldingsAllocation")
+                .ToList();
+
+            GrowthPoints = _context.Set<PortfolioGrowthPoint>()
+                .FromSqlRaw("SELECT * FROM Revolut.vw_PortfolioGrowth")
+                .OrderBy(p => p.Date)
                 .ToList();
         }
 
