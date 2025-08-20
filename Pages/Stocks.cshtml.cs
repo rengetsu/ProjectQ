@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using ProjectQ.Data;
 using ProjectQ.Models;
@@ -29,7 +29,7 @@ namespace ProjectQ.Pages
         [BindProperty]
         public Stock NewStock { get; set; }
 
-        // ? Pagination
+        // 📊 Pagination
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
         private const int PageSize = 10;
