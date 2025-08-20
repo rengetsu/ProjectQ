@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{page?}"
 @model ProjectQ.Pages.StocksModel
 @using System.Text.Json
 
@@ -36,6 +36,23 @@
                 }
             </tbody>
         </table>
+
+        <!-- 🔄 PAGINATION NAV -->
+        <div class="text-center mt-3">
+            @if (Model.TotalPages > 1)
+            {
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        @for (int i = 1; i <= Model.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                <a class="page-link" href="?page=@i">@i</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+        </div>
     </div>
 
     <!-- 📊 RIGHT SIDE: CHART (narrower) -->
@@ -45,7 +62,6 @@
     </div>
 
 </div>
-
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -76,12 +92,7 @@
 
         function renderStockChart(ticker) {
             const entries = chartDataByTicker[ticker];
-            console.log("Entries for", ticker, entries); // ✅ Add this for debugging
-
-            if (!entries || entries.length === 0) {
-                console.warn("No data for ticker:", ticker);
-                return;
-            }
+            if (!entries || entries.length === 0) return;
 
             const labels = entries.map(e => (e.date || e.Date || e[0])?.split('T')[0]);
             const data = entries.map(e => e.lastPrice || e.LastPrice || e[1]);
@@ -91,6 +102,5 @@
             chart.data.datasets[0].data = data;
             chart.update();
         }
-
     </script>
 }
