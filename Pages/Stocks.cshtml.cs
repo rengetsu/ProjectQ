@@ -5,7 +5,6 @@ using ProjectQ.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Text.Json.Serialization;
 
 namespace ProjectQ.Pages
 {
@@ -17,11 +16,6 @@ namespace ProjectQ.Pages
             public decimal LastPrice { get; set; }
         }
 
-        public Dictionary<string, List<StockHistoryPoint>> ChartDataByTicker { get; set; }
-
-
-
-
         private readonly AppDbContext _context;
 
         public StocksModel(AppDbContext context)
@@ -30,13 +24,28 @@ namespace ProjectQ.Pages
         }
 
         public IList<Stock> StockList { get; set; }
+        public Dictionary<string, List<StockHistoryPoint>> ChartDataByTicker { get; set; }
 
         [BindProperty]
         public Stock NewStock { get; set; }
 
-        public async Task OnGetAsync()
+        // ? Pagination
+        public int CurrentPage { get; set; }
+        public int TotalPages { get; set; }
+        private const int PageSize = 10;
+
+        public void OnGet(int page = 1)
         {
-            StockList = _context.Stocks.OrderByDescending(s => s.Date).ToList();
+            CurrentPage = page;
+
+            int totalCount = _context.Stocks.Count();
+            TotalPages = (int)Math.Ceiling(totalCount / (double)PageSize);
+
+            StockList = _context.Stocks
+                .OrderByDescending(s => s.Date)
+                .Skip((CurrentPage - 1) * PageSize)
+                .Take(PageSize)
+                .ToList();
 
             ChartDataByTicker = StockList
                 .GroupBy(s => s.Ticker)
@@ -51,7 +60,6 @@ namespace ProjectQ.Pages
                           .ToList()
                 );
         }
-
 
         public IActionResult OnPost()
         {
